@@ -51,7 +51,6 @@ class SmsClient(object):
         :return: 成功返回短信唯一表示, 错误打印 log
         '''
         url = 'http://api.189.cn/v2/emp/templateSms/sendSms'
-        timestamp = self._get_time_stamp()
         param = {'app_id': self.APP_ID,
                  'access_token': self._get_access_token(),
                  'acceptor_tel': acceptor_tel,
@@ -68,6 +67,20 @@ class SmsClient(object):
             return result['idertifier']
         else:
             Logger.error(result)
+
+    def send_sms_by_list(self, template_id, template_param, tel_list):
+        '''
+        按照列表群发
+        :param template_id: 模版短信 ID
+        :param template_param: 模版短信参数,字典类型
+        :param tel_list: 接收方电话号码组成的 list
+        :return: idertifier 组成的 list，idertifier 为电信返回的短信唯一标示
+        '''
+        result = []
+        for tel in tel_list:
+            iden = self.send_sms(template_id, template_param, tel)
+            result.append(iden)
+        return result
 
     def msg_status(self, identifier):
         url = 'http://api.189.cn/v2/EMP/nsagSms/appnotify/querysmsstatus'
@@ -90,5 +103,3 @@ class SmsClient(object):
             Logger.info(result)
         else:
             Logger.error(result)
-
-
