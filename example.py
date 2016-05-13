@@ -2,7 +2,7 @@ from SmsClient import SmsClient
 from config import APP_ID, APP_SECRET, GRANT_TYPE
 
 TEMPLATE_ID = '91548711'
-TEMPLATE_PARAM = {"orderCode": "8888888",
+TEMPLATE_PARAM = {"orderCode": "demoday",
                   "times": "7",
                   "lessonUrl": "http://open.189.cn"
                   }
